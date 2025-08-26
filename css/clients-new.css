@@ -1,0 +1,134 @@
+.clients-section {
+    position: relative;
+    padding: 80px 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.clients-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 40px 0;
+}
+
+.clients-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    width: calc(250px * 12); /* 6 logos × 2 for the loop */
+}
+
+.client-logo {
+    flex: 0 0 250px;
+    height: 120px;
+    padding: 20px;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 87, 146, 0.08);
+    transform: translateY(0);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.client-logo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 87, 146, 0.15);
+}
+
+.client-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.client-logo:hover::before {
+    left: 100%;
+}
+
+.client-logo img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: none;
+    transition: transform 0.3s ease;
+}
+
+.client-logo:hover img {
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 6)); /* Half of the total width */
+    }
+}
+
+/* Gradient overlays to hide the scroll edges */
+.clients-container::before,
+.clients-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100px;
+    z-index: 2;
+}
+
+.clients-container::before {
+    left: 0;
+    background: linear-gradient(90deg, #f8f9fa 0%, transparent 100%);
+}
+
+.clients-container::after {
+    right: 0;
+    background: linear-gradient(-90deg, #f8f9fa 0%, transparent 100%);
+}
+
+/* Pause animation on hover */
+.clients-track:hover {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .clients-section {
+        padding: 60px 0;
+    }
+    
+    .client-logo {
+        flex: 0 0 200px;
+        height: 100px;
+        margin: 0 10px;
+    }
+    
+    .clients-track {
+        width: calc(200px * 12);
+    }
+    
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-200px * 6));
+        }
+    }
+}
