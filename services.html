@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="images/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#005792">
+    <meta name="theme-color" content="#005792">
+    <title>Our Services | De-WAKS Engineering & Innovations Ltd</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="css/services.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/clients-new.css">
+    <!-- <link rel="stylesheet" href="css/header-new.css"> -->
+    <link rel="stylesheet" href="css/style_services.css">
+    <link rel="stylesheet" href="css/about-index.css">
+    <style>
+        /* Service Cards Grid */
+        .services-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 22, 187, 0.15);
+        }
+
+        .service-card-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-card-image img {
+            transform: scale(1.1);
+        }
+
+        .service-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 22, 187, 0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover .service-card-overlay {
+            opacity: 1;
+        }
+
+        .service-card-overlay button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-card-overlay button:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .service-card-content {
+            padding: 25px;
+        }
+
+        .service-card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .service-card-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .service-card-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .service-card-features li i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .service-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 12px 20px;
+            border-radius: 30px;
+            background: rgba(0, 22, 187, 0.1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card-cta:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 22, 187, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card-cta:hover:before {
+            left: 100%;
+        }
+
+        .service-card-cta:hover {
+            color: var(--accent);
+            gap: 18px;
+            background: rgba(216, 70, 10, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(216, 70, 10, 0.2);
+        }
+
+        .service-card-cta i {
+            transition: transform 0.3s ease;
+        }
+
+        .service-card-cta:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Modal Styles */
+        .service-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            overflow-y: auto;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .service-modal.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            padding: 40px 40px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #2a3f9e 100%);
+            color: white;
+            position: relative;
+        }
+
+        .modal-header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            flex-shrink: 0;
+        }
+
+        .modal-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-title p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .modal-body {
+            padding: 30px 40px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .modal-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-details h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .modal-details h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .modal-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .modal-features li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-features li i {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .modal-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--primary) 0%, #2a3f9e 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 22, 187, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .modal-cta:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .modal-cta:hover:before {
+            left: 100%;
+        }
+
+        .modal-cta:hover {
+            background: linear-gradient(135deg, var(--accent) 0%, #e55a00 100%);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(216, 70, 10, 0.4);
+            gap: 18px;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-cta i {
+            transition: transform 0.3s ease;
+        }
+
+        .modal-cta:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .services-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .modal-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 30px;
+            }
+            
+            .modal-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .modal-header, .modal-body {
+                padding: 25px;
+            }
+            
+            .services-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-wrapper">
+                    <img src="images/logo.png" alt="De-WAKS Logo" class="logo-img">
+                    <div class="logo-text">
+                        <h1>De-WAKS <span>Engineering & Innovations Ltd</span></h1>
+                        <p class="logo-slogan">...the heart of engineering possibilities...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./services.html">Services</a></li>
+                    <li><a href="./about.html">About</a></li>
+                    <li><a href="./projects.html">Projects</a></li>
+                    <li><a href="./clients.html">Clients</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                    <li><a href="excelontech/index.html">ExcelonTech</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Services Hero Section -->
+    <section class="services-hero">
+        <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1517404215738-15263e9f9178?auto=format&fit=crop&w=1500&q=80">
+            <source src="videos/cutting.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container services-hero-content">
+            <h1 data-aos="fade-up" data-aos-duration="1000">Our Comprehensive Services</h1>
+            <p data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">Innovative engineering solutions with a touch of class.</p>
+        </div>
+    </section>
+
+    <!-- Services Cards Section -->
+    <section id="services-cards">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Expert Services</h2>
+                <p>Innovative solutions tailored to your engineering needs</p>
+                    </div>
+
+            <div class="services-cards-grid">
+                <!-- Fuel Tank Fabrication Card -->
+                <div class="service-card" data-aos="fade-up" data-service="fuel-tanks">
+                    <div class="service-card-image">
+                        <img src="./images/Projects/1 (29).jpg" alt="Fuel Tank Fabrication">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+            </div>
+                    </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                        <i class="fas fa-gas-pump"></i>
+                        </div>
+                        <h3>Fuel Tank Fabrication & Repairs</h3>
+                        <p>State-of-the-art fuel storage solutions designed for safety and efficiency.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> Custom steel tank fabrication</li>
+                            <li><i class="fas fa-check"></i> Underground storage tanks</li>
+                            <li><i class="fas fa-check"></i> Maintenance and repairs</li>
+                        </ul>
+                        <a href="contact.html?service=fuel-tanks" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Metal Fabrication Card -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100" data-service="metal-works">
+                    <div class="service-card-image">
+                        <img src="./images/services/metalfabrication.jpg" alt="Metal Fabrication">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+                    </div>
+                    </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                        <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Metal Fabrication Works</h3>
+                        <p>Precision metal fabrication services for industrial and commercial applications.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> Structural steel fabrication</li>
+                            <li><i class="fas fa-check"></i> Industrial piping and fittings</li>
+                            <li><i class="fas fa-check"></i> Sheet metal work</li>
+                        </ul>
+                        <a href="contact.html?service=metal-works" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Electrical Installation Card -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200" data-service="electrical">
+                    <div class="service-card-image">
+                        <img src="./images/services/electricity.jpg" alt="Electrical Installation">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+                    </div>
+                    </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                        <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Electrical Installation</h3>
+                        <p>Comprehensive electrical solutions for modern buildings and facilities.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> CCTV and security systems</li>
+                            <li><i class="fas fa-check"></i> Fire alarm installations</li>
+                            <li><i class="fas fa-check"></i> Industrial electrical work</li>
+                        </ul>
+                        <a href="contact.html?service=electrical" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Branding Card -->
+                <div class="service-card" data-aos="fade-up" data-service="branding">
+                    <div class="service-card-image">
+                        <img src="./images/services/epoxy.JPG" alt="Visual Branding">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+                    </div>
+                    </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                        <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <h3>Visual Branding & 3D Epoxy</h3>
+                        <p>Transform your spaces with stunning visual elements and premium flooring.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> 3D epoxy floor installations</li>
+                            <li><i class="fas fa-check"></i> Corporate signage solutions</li>
+                            <li><i class="fas fa-check"></i> Custom branding elements</li>
+                        </ul>
+                        <a href="contact.html?service=branding" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Construction Card -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100" data-service="construction">
+                    <div class="service-card-image">
+                        <img src="./images/services/mining.JPG" alt="Construction Services">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+                    </div>
+                    </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                        <h3>Construction Services</h3>
+                        <p>Expert construction services for commercial and industrial projects.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> Civil works and infrastructure</li>
+                            <li><i class="fas fa-check"></i> Industrial construction</li>
+                            <li><i class="fas fa-check"></i> Plumbing systems</li>
+                        </ul>
+                        <a href="contact.html?service=construction" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    </div>
+
+                <!-- CAD & Training Card -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200" data-service="cad">
+                    <div class="service-card-image">
+                        <img src="./images/services/CAD.JPG" alt="CAD & Training">
+                        <div class="service-card-overlay">
+                            <button class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+                    <div class="service-card-content">
+                        <div class="service-card-icon">
+                            <i class="fas fa-drafting-compass"></i>
+            </div>
+                        <h3>CAD & Technical Training</h3>
+                        <p>Professional design services and technical education programs.</p>
+                        <ul class="service-card-features">
+                            <li><i class="fas fa-check"></i> CAD design and drafting</li>
+                            <li><i class="fas fa-check"></i> Technical training programs</li>
+                            <li><i class="fas fa-check"></i> 3D modeling services</li>
+                        </ul>
+                        <a href="contact.html?service=cad" class="service-card-cta">
+                            Get Started <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Service Modals -->
+    <!-- Fuel Tank Modal -->
+    <div class="service-modal" id="modal-fuel-tanks">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>Fuel Tank Fabrication & Repairs</h2>
+                        <p>State-of-the-art fuel storage solutions designed for safety and efficiency.</p>
+                    </div>
+                    </div>
+                </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/Projects/1 (29).jpg" alt="Fuel Tank Fabrication">
+                    </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>We specialize in designing, fabricating, and maintaining high-quality fuel storage systems for various industries. Our solutions prioritize safety, durability, and regulatory compliance.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> Custom steel and bolted tank fabrication</li>
+                        <li><i class="fas fa-check-circle"></i> Underground and above-ground storage tanks</li>
+                        <li><i class="fas fa-check-circle"></i> Tank maintenance and repairs</li>
+                        <li><i class="fas fa-check-circle"></i> Safety system integration</li>
+                        <li><i class="fas fa-check-circle"></i> Leak detection systems</li>
+                        <li><i class="fas fa-check-circle"></i> Corrosion protection</li>
+                        </ul>
+                    
+                    <a href="contact.html?service=fuel-tanks" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metal Works Modal -->
+    <div class="service-modal" id="modal-metal-works">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>Metal Fabrication Works</h2>
+                        <p>Precision metal fabrication services for industrial and commercial applications.</p>
+                    </div>
+                    </div>
+                </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/services/metalfabrication.jpg" alt="Metal Fabrication">
+                    </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>Our metal fabrication services deliver precision-engineered solutions for a wide range of industrial applications. We combine technical expertise with state-of-the-art equipment.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> Custom structural steel fabrication</li>
+                        <li><i class="fas fa-check-circle"></i> Industrial piping and fittings</li>
+                        <li><i class="fas fa-check-circle"></i> Sheet metal work</li>
+                        <li><i class="fas fa-check-circle"></i> Welding and assembly</li>
+                        <li><i class="fas fa-check-circle"></i> Metal finishing and treatment</li>
+                        <li><i class="fas fa-check-circle"></i> Precision machining</li>
+                        </ul>
+                    
+                    <a href="contact.html?service=metal-works" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Electrical Installation Modal -->
+    <div class="service-modal" id="modal-electrical">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>Electrical Installation</h2>
+                        <p>Comprehensive electrical solutions for modern buildings and facilities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/services/electricity.jpg" alt="Electrical Installation">
+                </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>Our electrical installation services provide safe, reliable, and efficient electrical solutions for residential, commercial, and industrial projects. We ensure compliance with all safety standards and regulations.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> CCTV and security system installation</li>
+                        <li><i class="fas fa-check-circle"></i> Fire alarm and detection systems</li>
+                        <li><i class="fas fa-check-circle"></i> Industrial electrical work</li>
+                        <li><i class="fas fa-check-circle"></i> Power distribution systems</li>
+                        <li><i class="fas fa-check-circle"></i> Lighting design and installation</li>
+                        <li><i class="fas fa-check-circle"></i> Electrical maintenance and repairs</li>
+                    </ul>
+                    
+                    <a href="contact.html?service=electrical" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Branding & 3D Epoxy Modal -->
+    <div class="service-modal" id="modal-branding">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>Visual Branding & 3D Epoxy</h2>
+                        <p>Transform your spaces with stunning visual elements and premium flooring.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/services/epoxy.JPG" alt="Visual Branding & 3D Epoxy">
+                </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>Create stunning visual experiences with our premium branding and epoxy flooring services. We combine artistic design with durable materials to create spaces that make a lasting impression.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> 3D epoxy floor installations</li>
+                        <li><i class="fas fa-check-circle"></i> Corporate signage solutions</li>
+                        <li><i class="fas fa-check-circle"></i> Custom branding elements</li>
+                        <li><i class="fas fa-check-circle"></i> Decorative floor coatings</li>
+                        <li><i class="fas fa-check-circle"></i> Logo and graphic installations</li>
+                        <li><i class="fas fa-check-circle"></i> Color matching and design consultation</li>
+                    </ul>
+                    
+                    <a href="contact.html?service=branding" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Construction Services Modal -->
+    <div class="service-modal" id="modal-construction">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>Construction Services</h2>
+                        <p>Expert construction services for commercial and industrial projects.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/services/mining.JPG" alt="Construction Services">
+                </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>Our construction services deliver comprehensive building solutions from concept to completion. We specialize in commercial and industrial projects with a focus on quality, safety, and timely delivery.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> Civil works and infrastructure</li>
+                        <li><i class="fas fa-check-circle"></i> Industrial construction projects</li>
+                        <li><i class="fas fa-check-circle"></i> Plumbing systems installation</li>
+                        <li><i class="fas fa-check-circle"></i> Building renovation and maintenance</li>
+                        <li><i class="fas fa-check-circle"></i> Project management and supervision</li>
+                        <li><i class="fas fa-check-circle"></i> Quality control and safety compliance</li>
+                    </ul>
+                    
+                    <a href="contact.html?service=construction" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAD & Technical Training Modal -->
+    <div class="service-modal" id="modal-cad">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <div class="modal-title">
+                        <h2>CAD & Technical Training</h2>
+                        <p>Professional design services and technical education programs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="./images/services/CAD.JPG" alt="CAD & Technical Training">
+                </div>
+                <div class="modal-details">
+                    <h3>Service Details</h3>
+                    <p>Enhance your technical capabilities with our comprehensive CAD design services and professional training programs. We provide both practical design solutions and educational opportunities for skill development.</p>
+                    
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> CAD design and drafting services</li>
+                        <li><i class="fas fa-check-circle"></i> Technical training programs</li>
+                        <li><i class="fas fa-check-circle"></i> 3D modeling and visualization</li>
+                        <li><i class="fas fa-check-circle"></i> Engineering drawing preparation</li>
+                        <li><i class="fas fa-check-circle"></i> Software training and certification</li>
+                        <li><i class="fas fa-check-circle"></i> Design consultation and optimization</li>
+                    </ul>
+                    
+                    <a href="contact.html?service=cad" class="modal-cta">
+                        Request a Quote <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <img src="images/logo2.png" alt="De-WAKS Logo" style="height: 40px; width: auto; margin-bottom: 10px;">
+                    <h3>De-WAKS Engineering</h3>
+                    <p>We Create, We Build, We Repair! We are the Heart of Engineering Possibilities!</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone"></i> 0503869656 / 0537199227</p>
+                    <p><i class="fas fa-envelope"></i> info.dewaks@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Ghana</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="services.html">Services</a>
+                    <a href="about.html">About Us</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="clients.html">Clients</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <a href="services.html#fuel-tanks">Fuel Tank Fabrication</a>
+                    <a href="services.html#metal-works">Metal Works</a>
+                    <a href="services.html#electrical">Electrical Installation</a>
+                    <a href="services.html#branding">Visual Branding</a>
+                    <a href="services.html#construction">Construction</a>
+                    <a href="services.html#cad">CAD & Training</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 De-WAKS Engineering & Innovations Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            offset: 120,
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuBtn.querySelector('i').classList.toggle('fa-bars');
+            menuBtn.querySelector('i').classList.toggle('fa-times');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    nav.classList.remove('active');
+                    menuBtn.querySelector('i').classList.add('fa-bars');
+                    menuBtn.querySelector('i').classList.remove('fa-times');
+                    
+                    const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
+                    const top = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Modal functionality
+        document.querySelectorAll('.service-card, .view-details-btn').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Prevent the card click from triggering when button is clicked
+                if (e.target.classList.contains('view-details-btn')) {
+                    e.stopPropagation();
+                }
+                
+                const serviceType = card.closest('.service-card').getAttribute('data-service');
+                const modal = document.getElementById(`modal-${serviceType}`);
+                
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // Close modals
+        document.querySelectorAll('.modal-close, .service-modal').forEach(closeBtn => {
+            closeBtn.addEventListener('click', (e) => {
+                if (e.target === closeBtn || e.target.classList.contains('modal-close')) {
+                    document.querySelectorAll('.service-modal').forEach(modal => {
+                        modal.classList.remove('active');
+                    });
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Prevent modal content from closing when clicking inside
+        document.querySelectorAll('.modal-content').forEach(content => {
+            content.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.service-modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                        document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Static navbar with scrolled shadow state only
+        const headerEl = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (y > 10) headerEl.classList.add('header--scrolled'); 
+            else headerEl.classList.remove('header--scrolled');
+        }, { passive: true });
+
+        document.addEventListener('pointermove', (e) => {
+            document.querySelectorAll('.btn').forEach(btn => {
+                const r = btn.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                btn.style.setProperty('--mx', x + '%');
+                btn.style.setProperty('--my', y + '%');
+            });
+        });
+    </script>
+</body>
+</html>

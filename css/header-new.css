@@ -1,0 +1,24 @@
+/*
+  header-new.css
+  This placeholder ensures the stylesheet link resolves with the correct MIME type (text/css),
+  preventing 404 -> HTML response and the strict MIME checking error in the browser console.
+  Add or replace with your actual header styles as needed.
+*/
+
+:root {
+	--header-height: 64px;
+	--header-bg: #0a0a0a;
+	--header-fg: #ffffff;
+}
+
+/* Basic, non-intrusive defaults. Adjust or remove when real styles are ready. */
+header {
+	background: var(--header-bg);
+	color: var(--header-fg);
+	min-height: var(--header-height);
+	box-sizing: border-box;
+}
+
+header a { color: inherit; text-decoration: none; }
+
+
