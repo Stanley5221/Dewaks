@@ -928,6 +928,24 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Compute real header height including safe area and runtime layout
+        const getHeaderHeight = () => {
+            const styles = getComputedStyle(document.documentElement);
+            const base = parseInt(styles.getPropertyValue('--header-height')) || 80;
+            const safeTop = parseInt(styles.getPropertyValue('env(safe-area-inset-top)')) || 0;
+            const el = document.querySelector('header');
+            const actual = el ? el.getBoundingClientRect().height : base;
+            return Math.max(base, actual) + safeTop;
+        };
+
+        const applyHeaderOffset = () => {
+            const offset = getHeaderHeight();
+            document.body.style.paddingTop = offset + 'px';
+        };
+        applyHeaderOffset();
+        window.addEventListener('resize', applyHeaderOffset);
+
+        
         // Initialize AOS
         AOS.init({
             offset: 120,
@@ -959,9 +977,7 @@
                     nav.classList.remove('active');
                     menuBtn.querySelector('i').classList.add('fa-bars');
                     menuBtn.querySelector('i').classList.remove('fa-times');
-                    
-                    const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
-                    const top = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+                    const top = targetElement.getBoundingClientRect().top + window.scrollY - getHeaderHeight();
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
             });
@@ -1014,12 +1030,23 @@
             }
         });
 
-        // Static navbar with scrolled shadow state only
+        // Static navbar with scrolled shadow state only + re-apply offset on changes
         const headerEl = document.querySelector('header');
         window.addEventListener('scroll', () => {
             const y = window.scrollY;
             if (y > 10) headerEl.classList.add('header--scrolled'); 
             else headerEl.classList.remove('header--scrolled');
+        }, { passive: true });
+        if (headerEl && 'ResizeObserver' in window) {
+            const ro = new ResizeObserver(applyHeaderOffset);
+            ro.observe(headerEl);
+        }
+        let offsetTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!offsetTicking) {
+                requestAnimationFrame(() => { applyHeaderOffset(); offsetTicking = false; });
+                offsetTicking = true;
+            }
         }, { passive: true });
 
         document.addEventListener('pointermove', (e) => {

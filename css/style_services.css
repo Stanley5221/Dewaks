@@ -10,6 +10,11 @@
     --gray: #7f8c8d;
 }
 
+/* Respect mobile safe areas (iOS notches, etc.) */
+:root {
+    --safe-top: env(safe-area-inset-top, 0px);
+}
+
 /* Logo styles */
 .logo-wrapper {
     display: flex;
@@ -62,7 +67,7 @@
 /* Header Styles - Modern Design */
 header {
     position: fixed;
-    top: 0;
+    top: 0; /* visual top; safe area handled via padding */
     left: 0;
     width: 100%;
     height: var(--header-height);
@@ -74,6 +79,9 @@ header {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0,0,0,0.06);
 }
+
+/* Add safe-area top padding inside the fixed header */
+header { padding-top: var(--safe-top); }
 
 header.header--hidden {
     transform: translateY(-100%);
@@ -220,6 +228,9 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
+/* Prevent header overlap of content */
+body { padding-top: calc(var(--header-height) + var(--safe-top)); }
 
 /* Hero Section */
 .hero {
@@ -883,7 +894,7 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 
 /* Footer */
 footer {
-    background: rgba(7, 18, 61, 0.45);
+    background: rgb(7 18 61);;
     -webkit-backdrop-filter: blur(12px) saturate(130%);
     backdrop-filter: blur(12px) saturate(130%);
     color: white;
@@ -974,7 +985,7 @@ footer {
     
     nav {
         position: fixed;
-        top: var(--header-height);
+        top: calc(var(--header-height) + var(--safe-top));
         left: 0;
         width: 100%;
         background: white;
@@ -1010,6 +1021,11 @@ footer {
 }
 
 @media (max-width: 768px) {
+    /* Compact logo/header text to avoid multi-line overflow */
+    .logo-text h1 { font-size: 18px; }
+    .logo-text h1 span { font-size: 0.6em; }
+    .logo-slogan { display: none; }
+    .logo-img { height: 40px; }
     .hero-content h2 {
         font-size: 2.2rem;
     }
